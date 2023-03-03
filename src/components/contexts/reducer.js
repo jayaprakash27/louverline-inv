@@ -1,13 +1,16 @@
 import { createStore } from "redux";
+import { fetchUser } from '../utils/fetchLocalStorage'
+
+const userInfo = fetchUser();
 
 const initialState = {
     users: [],
-    signedInUser: null,
+    signedInUser: userInfo,
 }
 
 const reducer = (state = initialState, action) =>{
     switch(action.type){
-        case 'REGISTER':
+        case 'SIGNUP':
             return {
                 ...state,
                 users : [...state.users, action.payload]
@@ -15,7 +18,12 @@ const reducer = (state = initialState, action) =>{
         case 'LOGIN':
             return {
                 ...state,
-                loggedInUser: state.payload
+                signedInUser: action.email
+            }
+        case 'LOGOUT':
+            return {
+                    ...state,
+                    signedInUser: null
             }
         default:
             return state;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { app } from "../firebase";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -23,14 +23,15 @@ const SignUp = () => {
       .then(() => {
         // Signed in
         try {
-            const docRef = addDoc(collection(db, "users"), {
+            const userRef = collection(db, 'users');
+            setDoc(doc(userRef, `${email}`), {
               name: name,
               email: email,
               orgName: orgName,
               phone: phone,
               access: false,
             });
-            console.log("Document written with ID: ", docRef.id);
+            console.log("Document written with ID: ");
             setSignedUp(true);
           } catch (e) {
             console.error("Error adding document: ", e);

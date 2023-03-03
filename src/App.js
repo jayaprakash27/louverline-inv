@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const App = () => {
   const signedInUser = useSelector(state => state.signedInUser)
-  console.log(signedInUser);
 return (
   <div className="App">
     <BrowserRouter>

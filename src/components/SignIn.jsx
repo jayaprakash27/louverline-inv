@@ -4,33 +4,52 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../firebase";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
+import { doc, getDoc, getFirestore } from "firebase/firestore"; 
+
+import { useDispatch,useSelector } from "react-redux";
 
 
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [access, setAccess] = useState(false);
+
+  const signedInUser = useSelector(state => state.signedInUser)
   const auth = getAuth();
   const dispatch = useDispatch();
+  
+const db = getFirestore(app);
+
+const getUser = async () => {
+  const userRef = doc(db, "users", email);
+const user = await getDoc(userRef);
+setAccess(user.data().access);
+}
 
   const  signInWithEmail = () => {
+    getUser();
     signInWithEmailAndPassword(auth, email, password)
       .then((payload) => {
         // Signed in
+        if( access )
+        {
         dispatch({
             type: 'LOGIN',
-            payload
+            email
         })
-
+        localStorage.setItem('signedInUser', email);
+      } else {
+        alert('Application pending!')
+      }
         // ...
       })
       .catch((error) => {
         alert(error.message);
       });
   };
+
   return (
     <div>
       <Header />
