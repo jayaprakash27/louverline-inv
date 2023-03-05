@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Header from "./Header";
-import Footer from "./Footer";
 import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { app } from "../firebase";
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 const db = getFirestore(app);
-
 const SignUp = () => {
 
     const [name, setName] = useState('');
@@ -18,6 +20,12 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [signedUp, setSignedUp] = useState(false);
+
+    
+    const navigate = useNavigate();
+
+
+
   const signUpWithDetails = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -31,23 +39,26 @@ const SignUp = () => {
               phone: phone,
               access: false,
             });
-            console.log("Document written with ID: ");
+            toast.success('Application submitted for review! ')
             setSignedUp(true);
+            navigate('../');
           } catch (e) {
-            console.error("Error adding document: ", e);
+            toast.error(e);
           }
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
+        console.log(JSON.stringify(error));
+        toast.error(errorMessage);
         // ..
       });
   };
   return (
     <div>
-      <Header />
+      <ToastContainer />
+      {/* <Header /> */}
       <div className="flex justify-center align-middle">
         <div className="card flex-col p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg w-fit ">
           <p className="text-cust-red p-3 m-6 ">Create a new account</p>
@@ -115,7 +126,7 @@ const SignUp = () => {
           </a>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

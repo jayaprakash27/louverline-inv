@@ -6,9 +6,9 @@ import Footer from './Footer'
 const Contact = () => {
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             Contact us
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }
