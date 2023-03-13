@@ -14,7 +14,7 @@
 .card{
   box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
                 inset 2px 2px 2px -1px rgba(160, 160, 160, 0.466);
-    background: rgba(238, 252, 255, 0.363);
+    background: rgba(255, 249, 238, 0.363);
 }
 .footer {
   display: flex;

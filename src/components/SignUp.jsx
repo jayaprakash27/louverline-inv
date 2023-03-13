@@ -5,8 +5,7 @@ import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { app } from "../firebase";
 
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -57,7 +56,6 @@ const SignUp = () => {
   };
   return (
     <div>
-      <ToastContainer />
       {/* <Header /> */}
       <div className="flex justify-center align-middle">
         <div className="card flex-col p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg w-fit ">
@@ -69,6 +67,7 @@ const SignUp = () => {
               className=" bg-transparent border  w-80 rounded-full m-2 text-center"
               name="name"
               id="name"
+              required
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -79,6 +78,7 @@ const SignUp = () => {
               className=" bg-transparent border  w-80 rounded-full m-2 text-center"
               name="orgName"
               id="orgName"
+              required
               onChange={(e) => setOrgName(e.target.value)}
             />
           </div>
@@ -89,6 +89,7 @@ const SignUp = () => {
               className=" bg-transparent w-80 rounded-full m-2 text-center"
               type="email"
               name="email"
+              required
               id="email"
             />
           </div>
@@ -99,6 +100,7 @@ const SignUp = () => {
               type="number"
               name="ph-number"
               id="ph-number"
+              required
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
@@ -109,11 +111,13 @@ const SignUp = () => {
               type="password"
               name="password"
               id="password"
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex justify-around m-3 ">
             <motion.button
+              type="submit"
               onClick={signUpWithDetails}
               whileTap={{ translateX: 4 }}
               className=" shadow-md hover:shadow-cust-red  cursor-pointer border border-cust-red w-32 ml-4 mr-4 text-cust-red hover:bg-cust-red hover:text-cust-white pl-8 pr-8 pt-2 pb-2 rounded-full "

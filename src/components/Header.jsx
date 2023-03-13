@@ -57,7 +57,6 @@ const Header = () => {
 
   return (
     <>
-      <ToastContainer />
       <header className="App-header z-20 flex justify-between align-middle text-md p-3 bg-cust-black">
         {/* desktop */}
         <div className="hidden md:flex w-full h-full justify-between ">
@@ -109,15 +108,15 @@ const Header = () => {
               >
                 Contact
               </a>
-              <Link to={"./"}>
                 {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Home</li> */}
-              </Link>
+              
               {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Menu</li> */}
               {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>About</li> */}
               {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Contact</li> */}
             </motion.ul>
 
             <div className="relative">
+              { signedInUser && 
               <motion.a
                 whileHover={{ scale: 1.03 }}
                 onClick={avatarClick}
@@ -125,6 +124,7 @@ const Header = () => {
               >
                 <FiMenu />{" "}
               </motion.a>
+              }
 
               {isMenu && (
                 <motion.div
@@ -147,6 +147,7 @@ const Header = () => {
 
                   {/* <p onClick={() => setIsMenu(false)} className='px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-50 hover:text-headingColor transition-all duration-100 ease-in-out text-textColor '><HiUser />Account </p> */}
                   {signedInUser && (
+                    <Link to={"./forgot"}>
                     <p
                       onClick={() => setIsMenu(false)}
                       className=" px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-cust-khaki hover:text-headingColor bg-cust-black duration-100 ease-in-out text-textColor "
@@ -154,6 +155,7 @@ const Header = () => {
                       <MdPassword />
                       Change Password{" "}
                     </p>
+                    </Link>
                   )}
                   {signedInUser && (
                     <p
@@ -220,7 +222,7 @@ const Header = () => {
                     Home{" "}
                   </p>
                 </Link>
-                <Link to={"./pricelist"}>
+                <Link to={"./contactus"}>
                   <p
                     onClick={() => setIsMenu(false)}
                     className=" px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-cust-khaki hover:text-headingColor bg-cust-black transition-all duration-100 ease-in-out text-textColor "
@@ -241,7 +243,7 @@ const Header = () => {
                   </Link>
                 )}
                 {signedInUser && (
-                  <Link to={"./contactus"}>
+                  <Link to={"./pricelist"}>
                     <p
                       onClick={() => setIsMenu(false)}
                       className=" px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-cust-khaki hover:text-headingColor bg-cust-black transition-all duration-100 ease-in-out text-textColor "

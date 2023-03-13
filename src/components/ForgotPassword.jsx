@@ -53,7 +53,7 @@ const ForgotPassword = () => {
             </motion.button>
           </div>
           <a href="./" className="text-cust-red underline p-3 m-6 ">
-            Back to Login
+            Go back
           </a>
         </div>
       </div>

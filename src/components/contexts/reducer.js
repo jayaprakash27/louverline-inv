@@ -25,6 +25,10 @@ const reducer = (state = initialState, action) =>{
                     ...state,
                     signedInUser: null
             }
+        case 'PDFFILE':
+            return {
+                        ...state,
+                        pdf: action.pdfUrl           }
         default:
             return state;
     }
