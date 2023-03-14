@@ -27,7 +27,6 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="flex justify-center align-middle">
         <div className="card flex-col p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg w-fit ">
           <p className="text-cust-red p-3 m-6 ">Enter your email address</p>

@@ -113,15 +113,15 @@ const PriceList = () => {
     })
   }, [])
   return (
-    <div className=" w-full">
-      <div className="group flex justify-center items-center flex-col border-2 border-dotted border-gray-500 w-full h-full cursor-pointer rounded-lg">
+    <div className=" w-screen">
+      <div className="group flex justify-center items-center flex-col border-2 border-dotted border-gray-500 w-full h-screen cursor-pointer rounded-lg">
         {isLoading ? (
           <Loader />
         ) : (
           <div>
             {!pdfAsset && signedInUser && signedInUser === "admin@mail.com" ? (
               <>
-                <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+                <label className="w-full h-screen flex flex-col items-center justify-center cursor-pointer">
                   <div className=" gap-2 w-full h-full flex flex-col items-center justify-center text-gray-500 hover:text-gray-700">
                     <MdCloudUpload className=" text-3xl " />
                     <p>Click here to upload the Pdf.</p>
@@ -138,7 +138,7 @@ const PriceList = () => {
               </>
             ) : (
               <>
-                <div className=" h-full w-full">
+                <div className=" h-screen w-screen">
                   <iframe
                     src={pdfAsset}
                     className=" w-full h-full"

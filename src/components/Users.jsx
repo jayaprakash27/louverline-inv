@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-
+import { MdDelete } from 'react-icons/md'
+import {TiTick} from 'react-icons/ti'
+import {RxCross1} from 'react-icons/rx'
 import { app } from "../firebase";
 
 import {
@@ -11,11 +11,13 @@ import {
   getDocs,
   getFirestore,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 
 import { motion } from "framer-motion";
 import { Tab } from "@headlessui/react";
+import { FiUserCheck, FiUserMinus } from "react-icons/fi";
 
 const Users = () => {
   const [validUsers, setValidUsers] = useState([]);
@@ -65,10 +67,20 @@ const Users = () => {
       access: !user.access,
     }).then(console.log("Done!"), document.getElementById(user.email).classList.add('hidden'));
   };
+  const toggleAdmin = (user) => {
+    const userRef = doc(db, "users", user.email);
+    updateDoc(userRef, {
+      isAdmin: !user.isAdmin,
+    }).then(console.log("Done!"), document.getElementById(user.email).classList.add('hidden'));
+  };
+
+  const deletePerson = async (user) => {
+    const userRef = doc(db, "users", user.email);
+    await deleteDoc(userRef).then(console.log("Done!"), document.getElementById(user.email).classList.add('hidden'));
+  };
 
   return (
     <div className="flex h-full justify-center items-center">
-      {/* <Header /> */}
       <div className=" w-full card max-w-5xl p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg ">
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-transparent p-1">
@@ -115,12 +127,20 @@ const Users = () => {
                     <div className="  w-40 h-12  ">{user.orgName}</div>
                     <div className=" w-40 h-12 hidden md:block  ">{user.phone}</div>
                     <div className=" hidden md:block w-40 h-12 ">{user.email}</div>
+                    <div className="flex w-40 gap-2 justify-center" >
                     <button
                       onClick={() => toggleAccess(user)}
-                      className="cursor-pointer border border-green-500 w-32 ml-4 mr-4  shadow-md hover:shadow-green-500 text-green-600 hover:bg-green-500 hover:text-cust-white pl-8 pr-8 pt-2 pb-2 rounded-full"
+                      className="cursor-pointer border border-green-500 h-fit shadow-md hover:shadow-green-500 text-green-600 hover:bg-green-500 hover:text-cust-white p-2 rounded-full"
                     >
-                      Approve
+                      <TiTick />
                     </button>
+                    <button
+                      onClick={() => deletePerson(user)}
+                      className="cursor-pointer border border-cust-red shadow-md h-fit hover:shadow-cust-red text-cust-red hover:bg-cust-red hover:text-cust-white p-2 rounded-full"
+                    >
+                      <MdDelete />
+                    </button>
+                    </div>
                   </div>
                 ))}
             </Tab.Panel>
@@ -139,12 +159,20 @@ const Users = () => {
                     <div className="  w-40 h-12  ">{user.orgName}</div>
                     <div className=" w-40 h-12 hidden md:block  ">{user.phone}</div>
                     <div className=" hidden md:block w-40 h-12 ">{user.email}</div>
+                    <div className="flex w-40 gap-2 justify-center" >
+                    {/* <button
+                      onClick={() => toggleAdmin(user)}
+                      className="cursor-pointer border border-green-500 h-fit shadow-md hover:shadow-green-500 text-green-600 hover:bg-green-500 hover:text-cust-white p-2 rounded-full"
+                    >{ user.isAdmin ? ( <FiUserMinus /> ) : (
+                      <FiUserCheck />)}
+                    </button> */}
                     <button
                       onClick={() => toggleAccess(user)}
-                      className="cursor-pointer border border-cust-red w-32 ml-4 mr-4  shadow-md hover:shadow-cust-red text-cust-red hover:bg-cust-red hover:text-cust-white pl-8 pr-8 pt-2 pb-2 rounded-full"
+                      className="cursor-pointer border border-cust-red shadow-md h-fit hover:shadow-cust-red text-cust-red hover:bg-cust-red hover:text-cust-white p-2 rounded-full"
                     >
-                      Revoke
+                      <RxCross1 />
                     </button>
+                    </div>
                   </div>
                 ))}
             </Tab.Panel>

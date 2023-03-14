@@ -34,6 +34,7 @@ const SignUp = () => {
             setDoc(doc(userRef, `${email}`), {
               name: name,
               email: email,
+              isAdmin: false,
               orgName: orgName,
               phone: phone,
               access: false,
@@ -56,7 +57,6 @@ const SignUp = () => {
   };
   return (
     <div>
-      {/* <Header /> */}
       <div className="flex justify-center align-middle">
         <div className="card flex-col p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg w-fit ">
           <p className="text-cust-red p-3 m-6 ">Create a new account</p>

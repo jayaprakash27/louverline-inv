@@ -1,9 +1,6 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
-import { HiCheck, HiChevronDown } from "react-icons/hi";
-
-import { Listbox, Transition } from "@headlessui/react";
 import Announcements from "./Announcements";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -20,9 +17,12 @@ const MainContainer = () => {
     try {
       const outlookData = await axios.get('https://script.google.com/macros/s/AKfycbwtOMSeHNYq3lIpCEyiNGvSqrHojuWQCzS_5Je7kSgrBuK_RfNGV5pbHq7a5BgDeQEn/exec');
       const deliteData = await axios.get('https://script.google.com/macros/s/AKfycbxALepPsSx_7zHQmVMEAZYJgbUNR-CB5v40pzNH8YgPRJl0MdYyPpEJE_8ImpNpgG-Hjg/exec');
-      const newaluminiumData = await axios.get('https://script.google.com/macros/s/AKfycbyaWOc7luSYJ5SjzV-5CqwfruUNw76fiZrgbTUuRJfuuz5jsbKGlzkCU8E3PI0WkMPq/exec');
+      const newaluminiumData = await axios.get('https://script.google.com/macros/s/AKfycbwJ6jLtrf-AmG6KCaLx-Tj1yJPQ8MyUHTQ_dAJN7yEAiYbyiZ1uJgJuB6L9CN45jQ/exec');
+      const symphonyData = await axios.get('https://script.google.com/macros/s/AKfycbyvDWSjTv0F2_ni7S8chAbOGeCpcJKQWlXqyVZxvyWPsSY-6zQyUsVJQkD3ISp1Box_zg/exec');
+      const rollerFabricData = await axios.get('https://script.google.com/macros/s/AKfycbzBTh-IE3F8lIsJltaapT-w4CSt92voh_-JdUem95bCPp81v7Yv6DG0JbQxtVBLIhuy/exec');
+      const woodData = await axios.get('https://script.google.com/macros/s/AKfycbzIgLtjiP0GYJdiSgKFUhGodIx2_WvV6K4krFATAk0rzhc2KzurICWBIyGJV0mXb88G/exec');
 
-      const mergedData = [...outlookData.data.data, ...deliteData.data.data, ...newaluminiumData.data.data];
+      const mergedData = [...outlookData.data.data, ...deliteData.data.data, ...newaluminiumData.data.data, ...symphonyData.data.data, ...rollerFabricData.data.data, ...woodData.data.data];
       setAPIdata(mergedData);
     } catch (error) {
       console.error(error);
@@ -31,15 +31,7 @@ const MainContainer = () => {
 
   useEffect(() => {
     fetchData();
-    // console.log(apidata);
-    console.log(ids)
   }, []);
-  // const getAllIds = async () => {
-  //   await fetchData();
-  //   for (let i = 0; i < apidata.length; i++) {
-  //     ids.push(apidata[i].prod_id);
-  //   }
-  // }
 
   useEffect(() => {
     if (apidata.length > 0) {
@@ -52,7 +44,6 @@ const inputFn =(value) => {
   setInput(value);
 }
   const showRes = () => {
-    console.log(apidata);
     var x = 0;
     var idhai = false;
     for (let i = 1; i < apidata.length; i++) {
@@ -81,91 +72,8 @@ const inputFn =(value) => {
       {/* <Header /> */}
       <div className="flex flex-col md:flex-row justify-around items-center">
         <div className="card flex-col min-h-80 p-4 mt-16 mb-16 items-center bg-cust-white rounded-lg w-fit ">
-          <div class="flex justify-center">
-            <div class=" bg-light mb-3 xl:w-96">
-              {/* <button onClick={(e) => setCat('Roller Blinds')}>Select</button> */}
-              {/* <Listbox value={selected} onChange={(e) => setCat(e.target.value)}>
-                {({ open }) => (
-                  <>
-                    <Listbox.Label className="block text-sm font-medium leading-6 text-cust-red">
-                      Select Category
-                    </Listbox.Label>
-                    <div className="relative mt-2">
-                      <Listbox.Button className="relative bg-transparent text-cust-red border border-cust-red focus:outline-none  w-80 rounded-full m-2 text-center">
-                        <span className="flex m-2 items-center">
-                          <span className="ml-3 text-center block ">
-                            {selected.name}
-                          </span>
-                        </span>
-                        <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                          <HiChevronDown
-                            className="h-5 w-5 text-cust-red"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </Listbox.Button>
-
-                      <Transition
-                        show={open}
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                      >
-                        <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {categories.map((category) => (
-                            <Listbox.Option
-                              key={category.id}
-                              className={({ active }) =>
-                                classNames(
-                                  active
-                                    ? "bg-cust-red text-white"
-                                    : "text-gray-900",
-                                  "relative text-center cursor-default select-none py-2 pl-3 pr-9"
-                                )
-                              }
-                              value={category}
-                            >
-                              {({ selected, active }) => (
-                                <>
-                                  <div className="flex items-center">
-                                    <span
-                                      className={classNames(
-                                        selected
-                                          ? "font-semibold"
-                                          : "font-normal",
-                                        "ml-3 block truncate"
-                                      )}
-                                    >
-                                      {category.name}
-                                    </span>
-                                  </div>
-
-                                  {selected ? (
-                                    <span
-                                      className={classNames(
-                                        active ? "text-white" : "text-cust-red",
-                                        "absolute inset-y-0 right-0 flex items-center pr-4"
-                                      )}
-                                    >
-                                      <HiCheck
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                    </span>
-                                  ) : null}
-                                </>
-                              )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
-                    </div>
-                  </>
-                )}
-              </Listbox> */}
-            </div>
-          </div>
+          
+      <h1 className="text-cust-red">Stock enquiry</h1>
 
           <div className="dataInput ">
             <input

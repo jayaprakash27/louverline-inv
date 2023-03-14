@@ -3,13 +3,10 @@ import logo2 from "./images/logo2.webp";
 import { useLocation, Link } from "react-router-dom";
 
 import {
-  MdAdd,
   MdLogout,
   MdHome,
-  MdContacts,
   MdPriceCheck,
   MdPassword,
-  MdWifiPassword,
 } from "react-icons/md";
 import { FiMenu, FiPhone } from "react-icons/fi";
 import { HiUsers } from "react-icons/hi";
@@ -19,8 +16,8 @@ import { motion } from "framer-motion";
 import { getAuth, signOut } from "firebase/auth";
 
 import { useDispatch, useSelector } from "react-redux";
-
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
@@ -28,7 +25,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const [isMenu, setIsMenu] = useState(false);
   const avatarClick = () => {
     setIsMenu(!isMenu);
@@ -49,6 +46,7 @@ const Header = () => {
           type: "LOGOUT",
         });
         localStorage.clear();
+        navigate("./");
       })
       .catch((error) => {
         // An error happened.
@@ -76,38 +74,36 @@ const Header = () => {
               exit={{ opacity: 0, x: 200 }}
               className="flex items-center gap-10"
             >
-              <a
+              <Link to='./'
                 className={
                   pathname === "/"
                     ? "pl-5 pr-5 pt-2 pb-2 text-cust-khaki hover:border-b-2 transition duration-300 border-cust-khaki"
                     : "pl-5 pr-5 pt-2 pb-2 hover:border-b-2 transition duration-300 ease-in-out border-cust-khaki "
                 }
-                href="./"
               >
                 Home
-              </a>
+              </Link>
               {signedInUser && (
-                <a
+                <Link to={'./pricelist'}
                   className={
-                    pathname === "/contactus"
+                    pathname === "/pricelist"
                       ? "pl-5 pr-5 pt-2 pb-2 text-cust-khaki hover:border-b-2 transition duration-300 border-cust-khaki"
                       : "pl-5 pr-5 pt-2 pb-2 hover:border-b-2 transition duration-300 ease-in-out border-cust-khaki "
                   }
                   href="./pricelist"
                 >
                   Price list
-                </a>
+                </Link>
               )}
-              <a
+              <Link to={'./contactus'}
                 className={
                   pathname === "/contactus"
                     ? "pl-5 pr-5 pt-2 pb-2 text-cust-khaki hover:border-b-2 transition duration-300 border-cust-khaki"
                     : "pl-5 pr-5 pt-2 pb-2 hover:border-b-2 transition duration-300 ease-in-out border-cust-khaki "
                 }
-                href="./contactus"
               >
                 Contact
-              </a>
+              </Link>
                 {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Home</li> */}
               
               {/* <li onClick={() => setIsMenu(false)} className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Menu</li> */}
@@ -140,7 +136,7 @@ const Header = () => {
                         className=" px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-cust-khaki hover:text-headingColor bg-cust-black transition-all duration-100 ease-in-out text-textColor "
                       >
                         <HiUsers />
-                        Admin{" "}
+                        Users{" "}
                       </p>
                     </Link>
                   )}
@@ -207,7 +203,7 @@ const Header = () => {
                       className=" px-2 py-2 flex items-center gap-2 cursor-pointer hover:bg-cust-khaki hover:text-headingColor bg-cust-black transition-all duration-100 ease-in-out text-textColor "
                     >
                       <HiUsers />
-                      Admin{" "}
+                      Users{" "}
                     </p>
                   </Link>
                 )}

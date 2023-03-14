@@ -46,6 +46,7 @@ const Announcements = () => {
       toast.success("Posted!");
       setPostContent("");
       fetchPosts();
+      setMakePost(!makePost);
     } else{
       toast.error("Post can't be empty!");
       }
@@ -134,10 +135,10 @@ const Announcements = () => {
                 {post.date}/{post.month}/{post.year} {post.hour}:{post.minute}{" "}
               </p>
               <div className="flex justify-between w-full items-center">
-                <p> {post.post}</p>
+                <p className=" p-2"> {post.post}</p>
                 { isAdmin && (<button
                   onClick={ () => deletePost(post.id)}
-                  className=" w-4 h-4 rounded-full bg-cust-red  text-white"
+                  className=" p-2 rounded-full bg-cust-red  text-white"
                 >
                   {" "}
                   <MdDelete />{" "}
